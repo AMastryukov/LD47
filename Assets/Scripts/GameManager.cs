@@ -6,29 +6,71 @@ public class GameManager : MonoBehaviour
 {
     public static Action<float> onTimerUpdated;
     public static Action<float> onMotivationUpdated;
+    public static Action<float> onFunInspirationTimerUpdated;
+    public static Action<float> onGraphicsInspirationTimerUpdated;
+    public static Action<float> onAudioInspirationTimerUpdated;
 
+    [Header("References")]
+    [SerializeField] private CanvasGroupDisplay startGameCGD;
+    [SerializeField] private CanvasGroupDisplay minigameCGD;
+    [SerializeField] private CanvasGroupDisplay gameResultCGD;
+    [SerializeField] private GameResultDisplay gameResultDisplay;
+    [SerializeField] private CanvasGroup minigameButtonsCG;
+
+    [Header("Gameplay Values")]
     [SerializeField] private float defaultTimer = 48f;
     [SerializeField] private float defaultMotivation = 25f;
     [SerializeField] private float maximumMotivation = 100f;
     [SerializeField] private float motivationLossRate = 2f;
     [SerializeField] private float motivationGainRate = 10f;
     [SerializeField] private float inspirationChance = 0.25f;
-    [SerializeField] private float inspirationTimer = 8f;
+    [SerializeField] private float inspirationTimerIncrease = 3f;
+    [SerializeField] private float inspirationTimerMax = 5f;
+
+    private float _motivation;
+    private float _timer;
+    private float _funInspirationTimer;
+    private float _graphicsInspirationTimer;
+    private float _audioInspirationTimer;
 
     public Game CurrentGame { get; private set; }
-    public float Motivation { get; private set; }
-    public float Timer { get; private set; }
-    public float InspiredArtTimer { get; private set; }
-    public float InspiredMusicTimer { get; private set; }
-    public float InspiredCodeTimer { get; private set; }
+    public float Motivation 
+    {
+        get { return _motivation; }
+        private set { _motivation = Mathf.Clamp(value, 0f, maximumMotivation); onMotivationUpdated?.Invoke(_motivation / maximumMotivation); }
+    }
+    public float Timer 
+    {
+        get { return _timer; }
+        private set { _timer = Mathf.Max(value, 0f); onTimerUpdated?.Invoke(_timer); }
+    }
+    public float FunInspirationTimer
+    {
+        get { return _funInspirationTimer; }
+        private set { _funInspirationTimer = Mathf.Clamp(value, 0f, inspirationTimerMax); onFunInspirationTimerUpdated?.Invoke(_funInspirationTimer); }
+    }
+    public float GraphicsInspirationTimer
+    {
+        get { return _graphicsInspirationTimer; }
+        private set { _graphicsInspirationTimer = Mathf.Clamp(value, 0f, inspirationTimerMax); onGraphicsInspirationTimerUpdated?.Invoke(_graphicsInspirationTimer); }
+    }
+    public float AudioInspirationTimer
+    {
+        get { return _audioInspirationTimer; }
+        private set { _audioInspirationTimer = Mathf.Clamp(value, 0f, inspirationTimerMax); onAudioInspirationTimerUpdated?.Invoke(_audioInspirationTimer); }
+    }
 
     private Coroutine timerCoroutine;
     private Coroutine motivationCoroutine;
-    private Coroutine inspirationRollCoroutine;
+    private Coroutine inspirationCoroutine;
 
     private void Start()
     {
-        NewGame();
+        startGameCGD.OpenDisplay();
+        minigameCGD.CloseDisplay();
+        gameResultCGD.CloseDisplay();
+
+        minigameButtonsCG.blocksRaycasts = false;
     }
 
     public void NewGame()
@@ -38,36 +80,60 @@ public class GameManager : MonoBehaviour
         Motivation = defaultMotivation;
         Timer = defaultTimer;
 
-        InspiredArtTimer = 0f;
-        InspiredMusicTimer = 0f;
-        InspiredCodeTimer = 0f;
+        FunInspirationTimer = 0f;
+        GraphicsInspirationTimer = 0f;
+        AudioInspirationTimer = 0f;
 
-        timerCoroutine = StartCoroutine(CountdownTimer());
-        motivationCoroutine = StartCoroutine(LoseMotivation());
-        inspirationRollCoroutine = StartCoroutine(InspirationRoll());
+        timerCoroutine = StartCoroutine(TimerCoroutine());
+        motivationCoroutine = StartCoroutine(MotivationCoroutine());
+        inspirationCoroutine = StartCoroutine(InspirationCoroutine());
+
+        startGameCGD.CloseDisplay();
+        gameResultCGD.CloseDisplay();
+
+        minigameCGD.OpenDisplay();
+
+        minigameButtonsCG.blocksRaycasts = true;
     }
 
     public void AddFun(float fun)
     {
-        if (CurrentGame != null) { CurrentGame.Fun += fun; }
+        if (CurrentGame != null) 
+        { 
+            if (FunInspirationTimer > 0f) { fun *= 2f; }
+
+            CurrentGame.Fun += fun;
+            Motivation += motivationGainRate;
+        }
     }
 
     public void AddGraphics(float graphics)
     {
-        if (CurrentGame != null) { CurrentGame.Graphics += graphics; }
+        if (CurrentGame != null) 
+        {
+            if (GraphicsInspirationTimer > 0f) { graphics *= 2f; }
+
+            CurrentGame.Graphics += graphics;
+            Motivation += motivationGainRate;
+        }
     }
 
     public void AddAudio(float audio)
     {
-        if (CurrentGame != null) { CurrentGame.Audio += audio; } 
+        if (CurrentGame != null) 
+        {
+            if (AudioInspirationTimer > 0f) { audio *= 2f; }
+
+            CurrentGame.Audio += audio;
+            Motivation += motivationGainRate;
+        }
     }
 
-    private IEnumerator CountdownTimer()
+    private IEnumerator TimerCoroutine()
     {
         while (Timer > 0f)
         {
             Timer -= 1f;
-            onTimerUpdated?.Invoke(Timer);
 
             yield return new WaitForSeconds(1f);
         }
@@ -75,12 +141,11 @@ public class GameManager : MonoBehaviour
         FinishGame(true);
     }
 
-    private IEnumerator LoseMotivation()
+    private IEnumerator MotivationCoroutine()
     {
         while (Motivation > 0f)
         {
             Motivation -= motivationLossRate * 0.25f;
-            onMotivationUpdated?.Invoke(Motivation / maximumMotivation);
 
             yield return new WaitForSeconds(0.25f);
         }
@@ -88,17 +153,38 @@ public class GameManager : MonoBehaviour
         FinishGame(false);
     }
 
-    private IEnumerator InspirationRoll()
+    private IEnumerator InspirationCoroutine()
     {
+        float coroutineUpdateTime = 0.25f;
+
         while (Timer > 0f)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(coroutineUpdateTime);
 
             // Roll for a chance of inspiration every second
-            if (UnityEngine.Random.Range(0f, 1f) < inspirationChance)
+            if (UnityEngine.Random.Range(0f, 1f) < inspirationChance * coroutineUpdateTime)
             {
-                
+                int inspirationRoll = UnityEngine.Random.Range(0, 3);
+
+                switch(inspirationRoll)
+                {
+                    case 0:
+                        FunInspirationTimer += inspirationTimerIncrease;
+                        break;
+
+                    case 1:
+                        GraphicsInspirationTimer += inspirationTimerIncrease;
+                        break;
+
+                    case 2:
+                        AudioInspirationTimer += inspirationTimerIncrease;
+                        break;
+                }
             }
+
+            FunInspirationTimer -= coroutineUpdateTime;
+            GraphicsInspirationTimer -= coroutineUpdateTime;
+            AudioInspirationTimer -= coroutineUpdateTime;
         }
     }
 
@@ -106,18 +192,61 @@ public class GameManager : MonoBehaviour
     {
         StopCoroutine(timerCoroutine);
         StopCoroutine(motivationCoroutine);
-        StopCoroutine(inspirationRollCoroutine);
+        StopCoroutine(inspirationCoroutine);
 
-        if (completed) { Debug.Log("You submitted your game!"); }
-        else { Debug.Log("You lost all motivation and gave up"); }
+        startGameCGD.CloseDisplay();
+        minigameCGD.CloseDisplay();
+
+        gameResultCGD.OpenDisplay();
+
+        gameResultDisplay.ShowGameResult(completed);
+
+        minigameButtonsCG.blocksRaycasts = false;
     }
+
+    #region Fake Minigame Methods
+    public void PlayCodingMinigame()
+    {
+        AddFun(1f);
+    }
+
+    public void PlayArtMinigame()
+    {
+        AddGraphics(1f);
+    }
+
+    public void PlayMusicMinigame()
+    {
+        AddAudio(1f);
+    }
+    #endregion
 }
 
 public class Game
 {
-    public float Fun { get; set; }
-    public float Graphics { get; set; }
-    public float Audio { get; set; }
+    public static Action<float> onFunUpdated;
+    public static Action<float> onGraphicsUpdated;
+    public static Action<float> onAudioUpdated;
+
+    private float _fun;
+    private float _graphics;
+    private float _audio;
+
+    public float Fun 
+    {
+        get { return _fun; }
+        set { _fun = Mathf.Max(0f, value); onFunUpdated?.Invoke(_fun); }
+    }
+    public float Graphics 
+    {
+        get { return _graphics; }
+        set { _graphics = Mathf.Max(0f, value); onGraphicsUpdated?.Invoke(_graphics); }
+    }
+    public float Audio
+    {
+        get { return _audio; }
+        set { _audio = Mathf.Max(0f, value); onAudioUpdated?.Invoke(_audio); }
+    }
 
     public Game()
     {
