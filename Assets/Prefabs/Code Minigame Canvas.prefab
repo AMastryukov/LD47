@@ -1041,7 +1041,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7980906566587651809}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -1093,17 +1093,46 @@ MonoBehaviour:
   - if ({0}) {{ }}
   - '{0}'
   contentStrings:
-  - tired = true
+  - self.isTired = true
   - TriggerAnxiety()
-  - anxious = true
-  - timeLeft = 0f
+  - self.isAnxious = true
+  - jam.timeLeft = 0f
   - GoToSleep()
-  - player.Kill()
+  - game.Finish(true)
   - GiveUp(false)
   - int nine = 9
   - new Game()
   - FixBug(false)
   - bool fixed = false
+  - self.Motivate()
+  - Try(Mode.Harder)
+  - water.Drink()
+  - Sleep(enough)
+  - Quit(LDJam)
+  - exitGame(0)
+  - bread()
+  - anime.Watch()
+  - GrabTissues(4)
+  - this.Screw()
+  - Panic(Time.Now)
+  - petDuck == True
+  - Debug.Log("HERE")
+  - it.Blaze(420)
+  - if(false){}else{}
+  - it.Blaze(420)
+  - GetComponent<E>()
+  - this.thing[33] = 7
+  - coffee.Drink(1f)
+  - yield return coffee break
+  - print("Hello World!")
+  - LolOlOLoloL
+  - // write comments ffs
+  - const float pi = 3.1415
+  - a = b; b = c; c = a;
+  - import numpy as np
+  - this.WhatIs("Owo")
+  - for (int i =0; i < 3; i++)
+  - while (true) { Quit() }
 --- !u!1 &8702613077309376067
 GameObject:
   m_ObjectHideFlags: 0
