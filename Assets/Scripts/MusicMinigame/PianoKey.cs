@@ -1,15 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class Key : MonoBehaviour
+public class PianoKey : MonoBehaviour
 {
+    public static Action<bool> onKeyPressed;
+
     [SerializeField] private KeyCode keyCode;
-    public MusicMinigameManager gameManager;
+
+    private AudioSource keySound;
 
     // Variables for beat overlap
     private Beat overlappingBeat;
     private bool beatIsOverlapping = false;
+
+    private void Awake()
+    {
+        keySound = GetComponent<AudioSource>();
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -31,15 +40,14 @@ public class Key : MonoBehaviour
     {
         if (Input.GetKeyDown(keyCode))
         {
+            onKeyPressed?.Invoke(beatIsOverlapping);
+
             if (beatIsOverlapping)
             {
+                keySound.Play();
+
                 Destroy(overlappingBeat.gameObject);
                 beatIsOverlapping = false;
-                gameManager.AddScore(gameManager.beatHitScore);
-            }
-            else
-            {
-                gameManager.AddScore(gameManager.beatMissScore);
             }
         }
     }

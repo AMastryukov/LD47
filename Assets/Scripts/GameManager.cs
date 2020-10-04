@@ -75,11 +75,13 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         CodeMinigame.onScore += AddFun;
+        MusicMinigame.onScore += AddAudio;
     }
 
     private void OnDestroy()
     {
         CodeMinigame.onScore -= AddFun;
+        MusicMinigame.onScore -= AddAudio;
     }
 
     private void Start()
