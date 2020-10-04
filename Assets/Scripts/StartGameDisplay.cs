@@ -31,6 +31,7 @@ public class StartGameDisplay : MonoBehaviour
     public void PressStartButton()
     {
         FindObjectOfType<GameManager>().NewGame(inputTextBox.text);
+        inputTextBox.text = "";
     }
 
     private void UpdateTheme(int lf)

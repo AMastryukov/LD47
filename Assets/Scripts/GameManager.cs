@@ -10,20 +10,19 @@ public class GameManager : MonoBehaviour
     public static Action<float> onGraphicsInspirationTimerUpdated;
     public static Action<float> onAudioInspirationTimerUpdated;
     public static Action<int> onLudumFactorumUpdated;
+    public static Action onGameStarted;
+    public static Action onGameFinished;
 
     public static int currentLF = 46;
 
     [Header("References")]
+    [SerializeField] private MinigameManager minigameManager;
     [SerializeField] private CanvasGroupDisplay startGameCGD;
     [SerializeField] private CanvasGroupDisplay minigameCGD;
     [SerializeField] private CanvasGroupDisplay gameResultCGD;
     [SerializeField] private CanvasGroupDisplay informationBarCGD;
     [SerializeField] private GameResultDisplay gameResultDisplay;
     [SerializeField] private CanvasGroup minigameButtonsCG;
-
-    [Header("Soundtrack")]
-    [SerializeField] private AudioSource soundtrackSource;
-    [SerializeField] private AudioClip[] soundtracks;
 
     [Header("Gameplay Values")]
     [SerializeField] private float defaultTimer = 48f;
@@ -91,6 +90,8 @@ public class GameManager : MonoBehaviour
 
     public void StartJam()
     {
+        minigameManager.CloseAllMinigames();
+
         informationBarCGD.CloseDisplay();
         startGameCGD.OpenDisplay();
         minigameCGD.CloseDisplay();
@@ -125,9 +126,7 @@ public class GameManager : MonoBehaviour
 
         minigameButtonsCG.blocksRaycasts = true;
 
-        // Select a random soundtrack and play it
-        soundtrackSource.clip = soundtracks[UnityEngine.Random.Range(0, soundtracks.Length)];
-        soundtrackSource.Play();
+        onGameStarted?.Invoke();
     }
 
     public void AddFun(float fun)
@@ -222,21 +221,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator FadeOutSoundtrack()
-    {
-        float soundtrackFadeOutTime = 1f;
-
-        while (soundtrackSource.volume > 0f)
-        {
-            soundtrackSource.volume -= 0.025f;
-
-            yield return new WaitForSeconds(soundtrackFadeOutTime * 0.025f);
-        }
-
-        soundtrackSource.Stop();
-        soundtrackSource.volume = 1f;
-    }
-
     private void FinishGame(bool completed)
     {
         StopCoroutine(timerCoroutine);
@@ -253,20 +237,10 @@ public class GameManager : MonoBehaviour
 
         minigameButtonsCG.blocksRaycasts = false;
 
-        StartCoroutine(FadeOutSoundtrack());
-    }
+        minigameManager.CloseAllMinigames();
 
-    #region Fake Minigame Methods
-    public void PlayArtMinigame()
-    {
-        AddGraphics(1f);
+        onGameFinished?.Invoke();
     }
-
-    public void PlayMusicMinigame()
-    {
-        AddAudio(1f);
-    }
-    #endregion
 }
 
 public class Game

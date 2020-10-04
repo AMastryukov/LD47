@@ -17,14 +17,23 @@ public class CodeMinigame : MonoBehaviour
     private int[] scoreArray;
     private int previousInputLength = -1;
 
+    private bool isActive = false;
+
     private void Start()
     {
         GenerateNewCode();
     }
 
+    public void ActivateGame(bool active)
+    {
+        isActive = active;
+        inputField.enabled = isActive;
+
+        if (isActive) { inputField.Select(); }
+    }
+
     private void GenerateNewCode()
     {
-        // Make sure it's 20 characters max
         string randFormatString = formatStrings[UnityEngine.Random.Range(0, formatStrings.Length)];
         string randContentString = contentStrings[UnityEngine.Random.Range(0, contentStrings.Length)];
         randomCode = string.Format(randFormatString, randContentString);
@@ -60,7 +69,6 @@ public class CodeMinigame : MonoBehaviour
                 // We've reached the end, generate new code string
                 if (currentTypedChar == randomCode.Length - 1) { GenerateNewCode(); }
             }
-            
         }
         else
         {

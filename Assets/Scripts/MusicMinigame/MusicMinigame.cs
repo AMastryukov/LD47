@@ -9,6 +9,8 @@ public class MusicMinigame : MonoBehaviour
     [SerializeField] public float beatHitScore = 1f;
     [SerializeField] public float beatMissScore = -1f;
 
+    private bool isActive = false;
+
     private void Awake()
     {
         PianoKey.onKeyPressed += CalculateScore;
@@ -19,6 +21,11 @@ public class MusicMinigame : MonoBehaviour
         StartMinigame();
     }
 
+    public void ActivateGame(bool active)
+    {
+        isActive = active;
+    }
+
     public void StartMinigame()
     {
         GetComponent<BeatSpawner>().StartSpawning();
@@ -26,6 +33,8 @@ public class MusicMinigame : MonoBehaviour
 
     private void CalculateScore(bool success)
     {
+        if (!isActive) { return; }
+
         float score = success ? beatHitScore : beatMissScore;
         onScore?.Invoke(score);
     }
