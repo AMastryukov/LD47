@@ -11,7 +11,6 @@ public class MinigameCanvasManager : MonoBehaviour
     public void OpenArtMinigame()
     {
         CloseAllMinigames();
-
         artMinigameCanvas.enabled = true;
     }
     
