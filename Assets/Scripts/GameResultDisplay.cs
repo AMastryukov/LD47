@@ -18,7 +18,16 @@ public class GameResultDisplay : MonoBehaviour
     [SerializeField] private TextMeshProUGUI graphicsScoreText;
     [SerializeField] private TextMeshProUGUI audioScoreText;
 
+    [Header("Gameplay Values")]
+    [SerializeField] private int jamEntries = 2000;
+    [SerializeField] private float perfectScore = 1000f;
+
     private CanvasGroupDisplay canvasGroupDisplay;
+
+    private int funPlacement = 0;
+    private int graphicsPlacement = 0;
+    private int audioPlacement = 0;
+    private int overallPlacement = 0;
 
     private void Awake()
     {
@@ -44,13 +53,59 @@ public class GameResultDisplay : MonoBehaviour
 
         gameNameText.text = gm.CurrentGame.Name;
 
-        // TODO: change this to a proper format and calculate it correctly
-        overallScoreText.text = "Overall: \t" + "254th";
-        funScoreText.text = "Fun: \t\t" + "166th";
-        graphicsScoreText.text = "Graphics: \t" + "243rd";
-        audioScoreText.text = "Audio: \t" + "92nd";
+        CalculateGameScore(gm.CurrentGame);
+
+        overallScoreText.text = "Overall: \t" + FormatPlacementString(overallPlacement);
+        funScoreText.text = "Fun: \t\t" + FormatPlacementString(funPlacement);
+        graphicsScoreText.text = "Graphics: \t" + FormatPlacementString(graphicsPlacement);
+        audioScoreText.text = "Audio: \t" + FormatPlacementString(audioPlacement);
 
         // TODO: display the images stored in the game
+    }
+
+    private void CalculateGameScore(Game game)
+    {
+        funPlacement = PlacementFromScore(game.Fun);
+        graphicsPlacement = PlacementFromScore(game.Graphics);
+        audioPlacement = PlacementFromScore(game.Audio);
+
+        overallPlacement = Random.Range(
+            Mathf.Min(funPlacement, graphicsPlacement, audioPlacement), 
+            Mathf.Max(funPlacement, graphicsPlacement, audioPlacement));
+    }
+
+    private string FormatPlacementString(int placement)
+    {
+        string placementString = placement.ToString();
+        char lastChar = placementString[placementString.Length - 1];
+
+        string formattedString = placementString;
+
+        switch(lastChar)
+        {
+            case '1':
+                formattedString += "st";
+                break;
+
+            case '2':
+                formattedString += "nd";
+                break;
+
+            case '3':
+                formattedString += "rd";
+                break;
+
+            default:
+                formattedString += "th";
+                break;
+        }
+
+        return formattedString;
+    }
+
+    private int PlacementFromScore(float score)
+    {
+        return Mathf.Max(1, jamEntries - (int)((score / perfectScore) * jamEntries));
     }
 
     private void DisplayUnfinishedGameScreen()

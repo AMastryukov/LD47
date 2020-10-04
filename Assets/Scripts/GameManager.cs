@@ -20,7 +20,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CanvasGroupDisplay informationBarCGD;
     [SerializeField] private GameResultDisplay gameResultDisplay;
     [SerializeField] private CanvasGroup minigameButtonsCG;
-    [SerializeField] private AudioSource soundtrack;
+
+    [Header("Soundtrack")]
+    [SerializeField] private AudioSource soundtrackSource;
+    [SerializeField] private AudioClip[] soundtracks;
 
     [Header("Gameplay Values")]
     [SerializeField] private float defaultTimer = 48f;
@@ -69,6 +72,16 @@ public class GameManager : MonoBehaviour
     private Coroutine motivationCoroutine;
     private Coroutine inspirationCoroutine;
 
+    private void Awake()
+    {
+        CodeMinigame.onScore += AddFun;
+    }
+
+    private void OnDestroy()
+    {
+        CodeMinigame.onScore -= AddFun;
+    }
+
     private void Start()
     {
         StartJam();
@@ -110,17 +123,19 @@ public class GameManager : MonoBehaviour
 
         minigameButtonsCG.blocksRaycasts = true;
 
-        soundtrack.Play();
+        // Select a random soundtrack and play it
+        soundtrackSource.clip = soundtracks[UnityEngine.Random.Range(0, soundtracks.Length)];
+        soundtrackSource.Play();
     }
 
     public void AddFun(float fun)
     {
         if (CurrentGame != null) 
         { 
-            if (FunInspirationTimer > 0f) { fun *= 2f; }
+            if (FunInspirationTimer > 0f && fun > 0f) { fun *= 2f; }
 
             CurrentGame.Fun += fun;
-            Motivation += motivationGainRate;
+            Motivation += motivationGainRate * Mathf.Sign(fun);
         }
     }
 
@@ -128,10 +143,10 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentGame != null) 
         {
-            if (GraphicsInspirationTimer > 0f) { graphics *= 2f; }
+            if (GraphicsInspirationTimer > 0f && graphics > 0f) { graphics *= 2f; }
 
             CurrentGame.Graphics += graphics;
-            Motivation += motivationGainRate;
+            Motivation += motivationGainRate * Mathf.Sign(graphics);
         }
     }
 
@@ -139,10 +154,10 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentGame != null) 
         {
-            if (AudioInspirationTimer > 0f) { audio *= 2f; }
+            if (AudioInspirationTimer > 0f && audio > 0f) { audio *= 2f; }
 
             CurrentGame.Audio += audio;
-            Motivation += motivationGainRate;
+            Motivation += motivationGainRate * Mathf.Sign(audio);
         }
     }
 
@@ -209,15 +224,15 @@ public class GameManager : MonoBehaviour
     {
         float soundtrackFadeOutTime = 1f;
 
-        while (soundtrack.volume > 0f)
+        while (soundtrackSource.volume > 0f)
         {
-            soundtrack.volume -= 0.025f;
+            soundtrackSource.volume -= 0.025f;
 
             yield return new WaitForSeconds(soundtrackFadeOutTime * 0.025f);
         }
 
-        soundtrack.Stop();
-        soundtrack.volume = 1f;
+        soundtrackSource.Stop();
+        soundtrackSource.volume = 1f;
     }
 
     private void FinishGame(bool completed)
@@ -240,11 +255,6 @@ public class GameManager : MonoBehaviour
     }
 
     #region Fake Minigame Methods
-    public void PlayCodingMinigame()
-    {
-        AddFun(1f);
-    }
-
     public void PlayArtMinigame()
     {
         AddGraphics(1f);
