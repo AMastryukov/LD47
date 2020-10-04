@@ -255,11 +255,6 @@ public class GameManager : MonoBehaviour
     }
 
     #region Fake Minigame Methods
-    public void PlayCodingMinigame()
-    {
-        AddFun(1f);
-    }
-
     public void PlayArtMinigame()
     {
         AddGraphics(1f);
