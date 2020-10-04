@@ -6,7 +6,7 @@ public class BeatSpawnerManager : MonoBehaviour
 {
     public GameObject[] beatSpawners;
     public GameObject beat;
-    [SerializeField] private float spawnInterval = 0.7f;
+    [SerializeField] private float spawnInterval = 1.4f;
     
     public void StartSpawning()
     {

@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class Beat : MonoBehaviour
 {
-    public MusicMinigameManager musicMinigameManager;
-    private int parentKey;
     [SerializeField] private float velocity = 300f;
     [SerializeField] private float MIN_SCREEN_BOUND_Y = -448f;
+    private int keyboardKey;
 
     // Initialize is to be called whenever this prefab is instantiated.
-    // Sets the key row it is in, registers itself with the game manager,
-    // and begins motion for its Rigidbody2D
-    public void Initialize(int key)
+    // Sets the key column it is in and begins motion for its Rigidbody2D
+    public void Initialize(int keyColumn)
     {
-        parentKey = key;
-        musicMinigameManager.RegisterBeat(gameObject.transform, parentKey);
+        keyboardKey = keyColumn;
         GetComponent<Rigidbody2D>().velocity = new Vector2(0, -velocity);
     }
 
@@ -23,7 +20,6 @@ public class Beat : MonoBehaviour
     {
         if (gameObject.transform.position.y <= MIN_SCREEN_BOUND_Y)
         {
-            musicMinigameManager.RemoveOldestBeat(parentKey);
             Destroy(gameObject);
         }
     }
