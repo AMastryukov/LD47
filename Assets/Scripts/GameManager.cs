@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CanvasGroupDisplay informationBarCGD;
     [SerializeField] private GameResultDisplay gameResultDisplay;
     [SerializeField] private CanvasGroup minigameButtonsCG;
+    [SerializeField] private AudioSource soundtrack;
 
     [Header("Gameplay Values")]
     [SerializeField] private float defaultTimer = 48f;
@@ -108,6 +109,8 @@ public class GameManager : MonoBehaviour
         informationBarCGD.OpenDisplay();
 
         minigameButtonsCG.blocksRaycasts = true;
+
+        soundtrack.Play();
     }
 
     public void AddFun(float fun)
@@ -202,6 +205,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private IEnumerator FadeOutSoundtrack()
+    {
+        float soundtrackFadeOutTime = 1f;
+
+        while (soundtrack.volume > 0f)
+        {
+            soundtrack.volume -= 0.025f;
+
+            yield return new WaitForSeconds(soundtrackFadeOutTime * 0.025f);
+        }
+
+        soundtrack.Stop();
+        soundtrack.volume = 1f;
+    }
+
     private void FinishGame(bool completed)
     {
         StopCoroutine(timerCoroutine);
@@ -217,6 +235,8 @@ public class GameManager : MonoBehaviour
         gameResultDisplay.ShowGameResult(completed);
 
         minigameButtonsCG.blocksRaycasts = false;
+
+        StartCoroutine(FadeOutSoundtrack());
     }
 
     #region Fake Minigame Methods
