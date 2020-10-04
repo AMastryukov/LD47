@@ -18,4 +18,9 @@ public class StartGameDisplay : MonoBehaviour
     {
         startButton.interactable = inputTextBox.text.Length >= 3;
     }
+
+    public void PressStartButton()
+    {
+        FindObjectOfType<GameManager>().NewGame(inputTextBox.text);
+    }
 }

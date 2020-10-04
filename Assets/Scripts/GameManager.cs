@@ -9,11 +9,15 @@ public class GameManager : MonoBehaviour
     public static Action<float> onFunInspirationTimerUpdated;
     public static Action<float> onGraphicsInspirationTimerUpdated;
     public static Action<float> onAudioInspirationTimerUpdated;
+    public static Action<int> onLudumFactorumUpdated;
+
+    public static int currentLF = 46;
 
     [Header("References")]
     [SerializeField] private CanvasGroupDisplay startGameCGD;
     [SerializeField] private CanvasGroupDisplay minigameCGD;
     [SerializeField] private CanvasGroupDisplay gameResultCGD;
+    [SerializeField] private CanvasGroupDisplay informationBarCGD;
     [SerializeField] private GameResultDisplay gameResultDisplay;
     [SerializeField] private CanvasGroup minigameButtonsCG;
 
@@ -66,16 +70,25 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        StartJam();
+    }
+
+    public void StartJam()
+    {
+        informationBarCGD.CloseDisplay();
         startGameCGD.OpenDisplay();
         minigameCGD.CloseDisplay();
         gameResultCGD.CloseDisplay();
 
         minigameButtonsCG.blocksRaycasts = false;
+
+        currentLF++;
+        onLudumFactorumUpdated?.Invoke(currentLF);
     }
 
-    public void NewGame()
+    public void NewGame(string gameName = "Untitled")
     {
-        CurrentGame = new Game();
+        CurrentGame = new Game(gameName);
 
         Motivation = defaultMotivation;
         Timer = defaultTimer;
@@ -92,6 +105,7 @@ public class GameManager : MonoBehaviour
         gameResultCGD.CloseDisplay();
 
         minigameCGD.OpenDisplay();
+        informationBarCGD.OpenDisplay();
 
         minigameButtonsCG.blocksRaycasts = true;
     }
@@ -196,6 +210,7 @@ public class GameManager : MonoBehaviour
 
         startGameCGD.CloseDisplay();
         minigameCGD.CloseDisplay();
+        informationBarCGD.CloseDisplay();
 
         gameResultCGD.OpenDisplay();
 
@@ -232,6 +247,7 @@ public class Game
     private float _graphics;
     private float _audio;
 
+    public string Name { get; private set; }
     public float Fun 
     {
         get { return _fun; }
@@ -248,8 +264,10 @@ public class Game
         set { _audio = Mathf.Max(0f, value); onAudioUpdated?.Invoke(_audio); }
     }
 
-    public Game()
+    public Game(string name)
     {
+        Name = name;
+
         Fun = 0f;
         Graphics = 0f;
         Audio = 0f;
