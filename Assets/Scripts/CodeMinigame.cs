@@ -67,8 +67,6 @@ public class CodeMinigame : MonoBehaviour
 
         feedbackText.color = successColor;
         feedbackText.text = "No issues found";
-
-        inputField.Select();
     }
 
     public void VerifyInput()
