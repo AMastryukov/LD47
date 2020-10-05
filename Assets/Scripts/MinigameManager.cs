@@ -10,12 +10,14 @@ public class MinigameManager : MonoBehaviour
 
     [SerializeField] private CodeMinigame codeMinigame;
     [SerializeField] private MusicMinigame musicMinigame;
+    [SerializeField] private ArtMinigame artMinigame;
 
     public void OpenArtMinigame()
     {
         CloseAllMinigames();
 
         artMinigameCanvas.enabled = true;
+        artMinigame.ActivateGame(true);
     }
     
     public void OpenMusicMinigame()
