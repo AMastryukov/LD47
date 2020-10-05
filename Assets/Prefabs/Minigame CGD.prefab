@@ -961,6 +961,10 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6355736694682322547, guid: 588b0f5397a066d418d76c2b381402fc, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 588b0f5397a066d418d76c2b381402fc, type: 3}
 --- !u!224 &6298048897006709433 stripped
@@ -1042,6 +1046,14 @@ PrefabInstance:
     - target: {fileID: 2757558972852723177, guid: 42cbeb43d6b82ed4da0eadced109e7c6, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3053892380648776856, guid: 42cbeb43d6b82ed4da0eadced109e7c6, type: 3}
+      propertyPath: beatHitScore
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3053892380648776856, guid: 42cbeb43d6b82ed4da0eadced109e7c6, type: 3}
+      propertyPath: beatMissScore
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 3078276879896415083, guid: 42cbeb43d6b82ed4da0eadced109e7c6, type: 3}
       propertyPath: m_LocalPosition.x
