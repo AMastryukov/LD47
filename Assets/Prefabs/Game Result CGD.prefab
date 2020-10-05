@@ -475,7 +475,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -81.475, y: -49.454}
+  m_AnchoredPosition: {x: -91.799995, y: -63.854027}
   m_SizeDelta: {x: 226.3524, y: 67.448906}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6354178790361564778
@@ -791,8 +791,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 119.66, y: 46.570038}
-  m_SizeDelta: {x: 156.28168, y: 109.223175}
+  m_AnchoredPosition: {x: 123.3, y: 51.63}
+  m_SizeDelta: {x: 156.28168, y: 103.25104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3750094293487333923
 GameObject:
@@ -830,7 +830,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -76.22, y: -7.9}
+  m_AnchoredPosition: {x: -91.8, y: -22.3}
   m_SizeDelta: {x: 236.86284, y: 41.554092}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3750094293487333950
@@ -1169,7 +1169,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3750094293781026589}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -1219,8 +1219,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.69996, y: -41.72999}
-  m_SizeDelta: {x: 118.96742, y: 17.03965}
+  m_AnchoredPosition: {x: 8.69996, y: -40.63}
+  m_SizeDelta: {x: 118.96742, y: 19.233551}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3750094293883189305
 CanvasRenderer:
@@ -1353,8 +1353,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.69996, y: -7.639996}
-  m_SizeDelta: {x: 118.96742, y: 17.03965}
+  m_AnchoredPosition: {x: 8.69996, y: -2.15}
+  m_SizeDelta: {x: 118.96742, y: 19.233551}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3750094293982399230
 CanvasRenderer:
@@ -1621,8 +1621,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.69996, y: -24.689995}
-  m_SizeDelta: {x: 118.96742, y: 17.03965}
+  m_AnchoredPosition: {x: 8.69996, y: -21.4}
+  m_SizeDelta: {x: 118.96742, y: 19.233551}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3750094294113353116
 CanvasRenderer:
@@ -1759,8 +1759,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -15}
-  m_SizeDelta: {x: -50, y: -30}
+  m_AnchoredPosition: {x: 0, y: -17.5}
+  m_SizeDelta: {x: -70, y: -35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3750094294149435112
 CanvasRenderer:
@@ -1849,7 +1849,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3750094294458737611}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -2240,8 +2240,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.7, y: 9.4}
-  m_SizeDelta: {x: 118.96742, y: 17.03965}
+  m_AnchoredPosition: {x: 8.7, y: 17.08}
+  m_SizeDelta: {x: 118.96742, y: 19.233551}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3750094294675327238
 CanvasRenderer:
@@ -2522,7 +2522,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3750094294829379745}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -2567,7 +2567,7 @@ MonoBehaviour:
   noScreenshotsText: {fileID: 5300005585971367411}
   jamEntries: 2000
   perfectScore: 1000
-  resetTimer: 6
+  resetTimer: 5
 --- !u!1 &3750094294886166850
 GameObject:
   m_ObjectHideFlags: 0
@@ -2602,8 +2602,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.4, y: 17.1}
-  m_SizeDelta: {x: 233.28625, y: 64.72746}
+  m_AnchoredPosition: {x: -4.4767, y: 15.453}
+  m_SizeDelta: {x: 256.42828, y: 111.01149}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3750094294886166877
 CanvasRenderer:
@@ -2633,8 +2633,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "I was working on the game but then I lost motivation and gave up. \n\nMaybe
-    I'll finish it next time."
+  m_text: 'You were working on the game but lost motivation and gave up.
+
+
+    To
+    gain motivation try to always stay busy and avoid making too many mistakes.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2879,8 +2882,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 72.6}
-  m_SizeDelta: {x: 260.6598, y: 28.165829}
+  m_AnchoredPosition: {x: 0, y: 81.7}
+  m_SizeDelta: {x: 336.91638, y: 36.405796}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &8740782223584052468
 CanvasRenderer:
@@ -2922,8 +2925,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278227199
-  m_fontColor: {r: 1, g: 0.566054, b: 0, a: 1}
+    rgba: 4278229759
+  m_fontColor: {r: 1, g: 0.6055647, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2940,8 +2943,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 13
+  m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 10
@@ -3016,7 +3019,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -32.05}
+  m_AnchoredPosition: {x: 0, y: -22.019}
   m_SizeDelta: {x: 0, y: -22.019148}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &5321318821964781479
