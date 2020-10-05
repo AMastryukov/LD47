@@ -18,6 +18,7 @@ public class GameResultDisplay : MonoBehaviour
     [SerializeField] private TextMeshProUGUI funScoreText;
     [SerializeField] private TextMeshProUGUI graphicsScoreText;
     [SerializeField] private TextMeshProUGUI audioScoreText;
+    [SerializeField] private TextMeshProUGUI noScreenshotsText;
 
     [Header("Gameplay Values")]
     [SerializeField] private int jamEntries = 2000;
@@ -73,6 +74,8 @@ public class GameResultDisplay : MonoBehaviour
                 screenshotImages[i].sprite = gm.CurrentGame.Screenshots[i];
             }
         }
+
+        noScreenshotsText.gameObject.SetActive(screenshotsToDisplay == 0);
     }
 
     private void CalculateGameScore(Game game)
