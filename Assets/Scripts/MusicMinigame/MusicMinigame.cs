@@ -10,19 +10,26 @@ public class MusicMinigame : MonoBehaviour
     [SerializeField] public float beatMissScore = -2f;
 
     private AudioManager audioManager;
+    private BeatSpawner beatSpawner;
+
     private bool isActive = false;
 
     private void Awake()
     {
         GameManager.onGameStarted += StartMinigame;
+        GameManager.onGameFinished += EndMinigame;
+
         PianoKey.onKeyPressed += HandleKeyPress;
 
         audioManager = FindObjectOfType<AudioManager>();
+        beatSpawner = GetComponent<BeatSpawner>();
     }
 
     private void OnDestroy()
     {
         GameManager.onGameStarted -= StartMinigame;
+        GameManager.onGameFinished -= EndMinigame;
+
         PianoKey.onKeyPressed -= HandleKeyPress;
     }
 
@@ -33,7 +40,12 @@ public class MusicMinigame : MonoBehaviour
 
     public void StartMinigame()
     {
-        GetComponent<BeatSpawner>().StartSpawning();
+        beatSpawner.StartSpawning();
+    }
+
+    public void EndMinigame()
+    {
+        beatSpawner.StopSpawning();
     }
 
     private void HandleKeyPress(bool success, KeyCode keyCode)
