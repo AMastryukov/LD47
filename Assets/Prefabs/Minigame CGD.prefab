@@ -835,6 +835,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4809420504884565000, guid: 42cbeb43d6b82ed4da0eadced109e7c6, type: 3}
+      propertyPath: spawnInterval
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 4939219694639266766, guid: 42cbeb43d6b82ed4da0eadced109e7c6, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
