@@ -1,15 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.UI;
 
-public class Key : MonoBehaviour
+public class PianoKey : MonoBehaviour
 {
+    public static Action<bool> onKeyPressed;
+
+    [SerializeField] private Image noteAreaImage;
+    [SerializeField] private Color correctNoteColor;
+    [SerializeField] private Color wrongNoteColor;
     [SerializeField] private KeyCode keyCode;
-    public MusicMinigameManager gameManager;
 
     // Variables for beat overlap
     private Beat overlappingBeat;
     private bool beatIsOverlapping = false;
+    private Color defaultNoteAreaColor;
+
+    private void Awake()
+    {
+        defaultNoteAreaColor = noteAreaImage.color;
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -31,16 +43,25 @@ public class Key : MonoBehaviour
     {
         if (Input.GetKeyDown(keyCode))
         {
+            onKeyPressed?.Invoke(beatIsOverlapping);
+
+            StartCoroutine(FlashImageColor(beatIsOverlapping));
+
             if (beatIsOverlapping)
             {
                 Destroy(overlappingBeat.gameObject);
                 beatIsOverlapping = false;
-                gameManager.AddScore(gameManager.beatHitScore);
-            }
-            else
-            {
-                gameManager.AddScore(gameManager.beatMissScore);
             }
         }
+    }
+
+    private IEnumerator FlashImageColor(bool success)
+    {
+        if (success) { noteAreaImage.color = correctNoteColor; }
+        else { noteAreaImage.color = wrongNoteColor; }
+
+        yield return new WaitForSeconds(0.25f);
+
+        noteAreaImage.color = defaultNoteAreaColor;
     }
 }

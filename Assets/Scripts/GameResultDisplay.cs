@@ -12,6 +12,7 @@ public class GameResultDisplay : MonoBehaviour
     [SerializeField] private Button nextJamButton;
 
     [Header("Finished Game References")]
+    [SerializeField] private Image[] screenshotImages;
     [SerializeField] private TextMeshProUGUI gameNameText;
     [SerializeField] private TextMeshProUGUI overallScoreText;
     [SerializeField] private TextMeshProUGUI funScoreText;
@@ -21,6 +22,7 @@ public class GameResultDisplay : MonoBehaviour
     [Header("Gameplay Values")]
     [SerializeField] private int jamEntries = 2000;
     [SerializeField] private float perfectScore = 1000f;
+    [SerializeField] private int resetTimer = 6;
 
     private CanvasGroupDisplay canvasGroupDisplay;
 
@@ -61,6 +63,16 @@ public class GameResultDisplay : MonoBehaviour
         audioScoreText.text = "Audio: \t" + FormatPlacementString(audioPlacement);
 
         // TODO: display the images stored in the game
+        int screenshotsToDisplay = Mathf.Min(gm.CurrentGame.Screenshots.Count, screenshotImages.Length);
+        for(int i = 0; i < screenshotImages.Length; i++)
+        {
+            screenshotImages[i].gameObject.SetActive(i < screenshotsToDisplay);
+
+            if (i < screenshotsToDisplay)
+            {
+                screenshotImages[i].sprite = gm.CurrentGame.Screenshots[i];
+            }
+        }
     }
 
     private void CalculateGameScore(Game game)
@@ -118,7 +130,7 @@ public class GameResultDisplay : MonoBehaviour
     {
         nextJamButton.interactable = false;
 
-        for (int i = 9; i >= 0; i--)
+        for (int i = resetTimer; i >= 0; i--)
         {
             yield return new WaitForSeconds(1f);
 

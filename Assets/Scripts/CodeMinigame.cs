@@ -8,6 +8,9 @@ public class CodeMinigame : MonoBehaviour
 
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private TextMeshProUGUI requiredCodeText;
+    [SerializeField] private TextMeshProUGUI feedbackText;
+    [SerializeField] private Color successColor;
+    [SerializeField] private Color errorColor;
 
     [Header("Code String Data")]
     [SerializeField] private string[] formatStrings;
@@ -17,14 +20,33 @@ public class CodeMinigame : MonoBehaviour
     private int[] scoreArray;
     private int previousInputLength = -1;
 
+    private bool isActive = false;
+
+    private void Awake()
+    {
+        GameManager.onGameFinished += GenerateNewCode;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.onGameFinished -= GenerateNewCode;
+    }
+
     private void Start()
     {
         GenerateNewCode();
     }
 
+    public void ActivateGame(bool active)
+    {
+        isActive = active;
+        inputField.enabled = isActive;
+
+        if (isActive) { inputField.Select(); }
+    }
+
     private void GenerateNewCode()
     {
-        // Make sure it's 20 characters max
         string randFormatString = formatStrings[UnityEngine.Random.Range(0, formatStrings.Length)];
         string randContentString = contentStrings[UnityEngine.Random.Range(0, contentStrings.Length)];
         randomCode = string.Format(randFormatString, randContentString);
@@ -38,6 +60,9 @@ public class CodeMinigame : MonoBehaviour
         previousInputLength = -1;
         requiredCodeText.text = randomCode;
         inputField.text = "";
+
+        feedbackText.color = successColor;
+        feedbackText.text = "No issues found";
     }
 
     public void VerifyInput()
@@ -55,16 +80,21 @@ public class CodeMinigame : MonoBehaviour
             {
                 onScore?.Invoke(1f);
 
+                feedbackText.color = successColor;
+                feedbackText.text = "No issues found";
+
                 scoreArray[currentTypedChar] = 0;
 
                 // We've reached the end, generate new code string
                 if (currentTypedChar == randomCode.Length - 1) { GenerateNewCode(); }
             }
-            
         }
         else
         {
-            onScore?.Invoke(-1);
+            onScore?.Invoke(-2f);
+
+            feedbackText.color = errorColor;
+            feedbackText.text = "Error at character " + currentTypedChar;
 
             inputField.text = inputField.text.Substring(0, inputField.text.Length - 1);
             VerifyInput();

@@ -31,10 +31,12 @@ public class StartGameDisplay : MonoBehaviour
     public void PressStartButton()
     {
         FindObjectOfType<GameManager>().NewGame(inputTextBox.text);
+        inputTextBox.text = "";
     }
 
     private void UpdateTheme(int lf)
     {
         themeText.text = "<b>Theme:</b> " + themes[UnityEngine.Random.Range(0, themes.Length - 1)];
+        inputTextBox.text = "";
     }
 }
