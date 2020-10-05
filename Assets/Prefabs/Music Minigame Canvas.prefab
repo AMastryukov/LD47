@@ -327,7 +327,7 @@ MonoBehaviour:
   - {fileID: 8429982925992047379}
   beatParent: {fileID: 3453692290937062943}
   beatPrefab: {fileID: 8531593865589466680, guid: 33b508cf9f611ad41b241517b7d98b82, type: 3}
-  spawnInterval: 0.45
+  spawnInterval: 0.5
 --- !u!114 &1157570319850285598
 MonoBehaviour:
   m_ObjectHideFlags: 0
