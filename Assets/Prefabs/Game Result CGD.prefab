@@ -2578,7 +2578,7 @@ MonoBehaviour:
   graphicsScoreText: {fileID: 3750094294113353091}
   audioScoreText: {fileID: 3750094293883189304}
   noScreenshotsText: {fileID: 5300005585971367411}
-  jamEntries: 2000
+  jamEntries: 1000
   perfectScore: 1000
   resetTimer: 5
 --- !u!1 &3750094294886166850
