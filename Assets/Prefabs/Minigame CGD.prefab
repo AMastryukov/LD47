@@ -3562,6 +3562,22 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6264307558762735859, guid: 69755b1bf15a8284aa742a02c0647f7d, type: 3}
+      propertyPath: m_fontSize
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6264307558762735859, guid: 69755b1bf15a8284aa742a02c0647f7d, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221637153032690332, guid: 69755b1bf15a8284aa742a02c0647f7d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 107.926025
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221637153032690332, guid: 69755b1bf15a8284aa742a02c0647f7d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 12.113655
+      objectReference: {fileID: 0}
     - target: {fileID: 7980906566587651809, guid: 69755b1bf15a8284aa742a02c0647f7d, type: 3}
       propertyPath: m_Name
       value: Code Minigame Canvas
