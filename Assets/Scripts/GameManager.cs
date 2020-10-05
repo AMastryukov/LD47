@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -269,6 +270,7 @@ public class Game
         get { return _audio; }
         set { _audio = Mathf.Max(0f, value); onAudioUpdated?.Invoke(_audio); }
     }
+    public List<Sprite> Screenshots { get; set; } = new List<Sprite>();
 
     public Game(string name)
     {

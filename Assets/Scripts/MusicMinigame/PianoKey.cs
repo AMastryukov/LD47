@@ -23,19 +23,12 @@ public class PianoKey : MonoBehaviour
         defaultNoteAreaColor = noteAreaImage.color;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        overlappingBeat = other.GetComponent<Beat>();
-        if (overlappingBeat != null) { beatIsOverlapping = true; }
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        // Ensure that the collider exiting the key is a Beat
-        if (other.GetComponent<Beat>() != null)
+        if (collision.GetComponent<Beat>() != null)
         {
-            overlappingBeat = null;
-            beatIsOverlapping = false;
+            overlappingBeat = collision.GetComponent<Beat>();
+            beatIsOverlapping = true;
         }
     }
 
