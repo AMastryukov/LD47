@@ -20,6 +20,6 @@ public class TimerDisplay : MonoBehaviour
 
     private void UpdateTimerText(float newTimer)
     {
-        timerText.text = string.Format("<b>JAM ENDS</b>\n{0:0} hours", newTimer);
+        timerText.text = string.Format("<b>COMPO ENDS</b>\n{0:0} hours", newTimer);
     }
 }
