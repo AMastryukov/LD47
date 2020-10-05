@@ -24,11 +24,15 @@ public class CodeMinigame : MonoBehaviour
     private int[] scoreArray;
     private int previousInputLength = -1;
 
+    private AudioManager audioManager;
+
     private bool isActive = false;
 
     private void Awake()
     {
         GameManager.onGameFinished += GenerateNewCode;
+
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void OnDestroy()
@@ -77,6 +81,8 @@ public class CodeMinigame : MonoBehaviour
         previousInputLength = currentTypedChar;
 
         if (isBackspace || currentTypedChar == -1) { return; }
+
+        audioManager?.PlayRandomClick();
 
         if (inputField.text[currentTypedChar].Equals(randomCode[currentTypedChar]))
         {

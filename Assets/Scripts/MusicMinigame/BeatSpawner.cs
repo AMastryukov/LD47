@@ -8,10 +8,28 @@ public class BeatSpawner : MonoBehaviour
     [SerializeField] private Transform beatParent;
     [SerializeField] private GameObject beatPrefab;
     [SerializeField] private float beatsPerMinute = 140f;
-    
+
+    private Coroutine spawnCoroutine;
+    private AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = FindObjectOfType<AudioManager>();
+    }
+
     public void StartSpawning()
     {
-        StartCoroutine(CreateNewBeat());
+        if (audioManager.CurrentSong.name == "ludum") { beatsPerMinute = 150f; }
+        else { beatsPerMinute = 140f; }
+
+        spawnCoroutine = StartCoroutine(CreateNewBeat());
+    }
+
+    public void StopSpawning()
+    {
+        if (spawnCoroutine == null) { return; }
+
+        StopCoroutine(spawnCoroutine);
     }
     
     IEnumerator CreateNewBeat()

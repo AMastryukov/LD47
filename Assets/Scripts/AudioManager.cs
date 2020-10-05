@@ -4,14 +4,35 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] private AudioSource preGameTrack;
-    [SerializeField] private AudioSource gameplayTrack;
-    [SerializeField] private AudioClip[] gameplaySongs;
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource soundEffectSource;
+    [SerializeField] private AudioSource musicSource;
+
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip pregameTrack;
+    [SerializeField] private AudioClip[] gameplayTracks;
+    [SerializeField] private AudioClip buttonHighlight;
+    [SerializeField] private AudioClip buttonClick;
+    [SerializeField] private AudioClip[] pianoNotesHit;
+    [SerializeField] private AudioClip[] pianoNotesMiss;
+    [SerializeField] private AudioClip codingGame;
+    [SerializeField] private AudioClip artGame;
+    [SerializeField] private AudioClip[] keyboardClicks;
+
+    public AudioClip CurrentSong 
+    {
+        get 
+        { 
+            return musicSource.clip;
+        }
+    }
 
     private void Awake()
     {
         GameManager.onGameStarted += PlayGameTrack;
         GameManager.onGameFinished += PlayPreGameTrack;
+
+        PlayPreGameTrack();
     }
 
     private void OnDestroy()
@@ -23,32 +44,54 @@ public class AudioManager : MonoBehaviour
     public void PlayGameTrack()
     {
         // Select a random soundtrack and play it
-        gameplayTrack.clip = gameplaySongs[UnityEngine.Random.Range(0, gameplaySongs.Length)];
-        gameplayTrack.Play();
-
-        StartCoroutine(FadeOutTrack(preGameTrack));
+        musicSource.clip = gameplayTracks[UnityEngine.Random.Range(0, gameplayTracks.Length)];
+        musicSource.Play();
     }
 
     public void PlayPreGameTrack()
     {
-        preGameTrack.Play();
-
-        StartCoroutine(FadeOutTrack(gameplayTrack));
+        musicSource.clip = pregameTrack;
+        musicSource.Play();
     }
 
-    private IEnumerator FadeOutTrack(AudioSource track)
+    public void PlaySoundEffect(AudioClip clip)
     {
-        float defaultVolume = track.volume;
-        float soundtrackFadeOutTime = 1f;
+        soundEffectSource.PlayOneShot(clip);
+    }
 
-        while (track.volume > 0f)
-        {
-            track.volume -= 0.025f;
+    public void PlayButtonHighlight()
+    {
+        soundEffectSource.PlayOneShot(buttonHighlight);
+    }
 
-            yield return new WaitForSeconds(soundtrackFadeOutTime * 0.025f);
-        }
+    public void PlayButtonClick()
+    {
+        soundEffectSource.PlayOneShot(buttonClick);
+    }
 
-        track.Stop();
-        track.volume = defaultVolume;
+    public void PlayPianoNote(int key, bool hit)
+    {
+        if (hit) { soundEffectSource.PlayOneShot(pianoNotesHit[key], 0.5f); }
+        else { soundEffectSource.PlayOneShot(pianoNotesMiss[key]); }
+    }
+
+    public void PlayMusicGameSound()
+    {
+        soundEffectSource.PlayOneShot(pianoNotesHit[Random.Range(0, pianoNotesHit.Length)], 0.5f);
+    }
+
+    public void PlayCodingGameSound()
+    {
+        soundEffectSource.PlayOneShot(codingGame);
+    }
+
+    public void PlayArtGameSound()
+    {
+        soundEffectSource.PlayOneShot(artGame);
+    }
+
+    public void PlayRandomClick()
+    {
+        soundEffectSource.PlayOneShot(keyboardClicks[Random.Range(0, keyboardClicks.Length)]);
     }
 }

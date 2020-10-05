@@ -9,16 +9,21 @@ public class MusicMinigame : MonoBehaviour
     [SerializeField] public float beatHitScore = 1f;
     [SerializeField] public float beatMissScore = -2f;
 
+    private AudioManager audioManager;
     private bool isActive = false;
 
     private void Awake()
     {
-        PianoKey.onKeyPressed += CalculateScore;
+        GameManager.onGameStarted += StartMinigame;
+        PianoKey.onKeyPressed += HandleKeyPress;
+
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
-    void Start()
+    private void OnDestroy()
     {
-        StartMinigame();
+        GameManager.onGameStarted -= StartMinigame;
+        PianoKey.onKeyPressed -= HandleKeyPress;
     }
 
     public void ActivateGame(bool active)
@@ -31,9 +36,28 @@ public class MusicMinigame : MonoBehaviour
         GetComponent<BeatSpawner>().StartSpawning();
     }
 
-    private void CalculateScore(bool success)
+    private void HandleKeyPress(bool success, KeyCode keyCode)
     {
         if (!isActive) { return; }
+
+        switch(keyCode)
+        {
+            case KeyCode.Q:
+                audioManager?.PlayPianoNote(0, success);
+                break;
+
+            case KeyCode.W:
+                audioManager?.PlayPianoNote(1, success);
+                break;
+
+            case KeyCode.E:
+                audioManager?.PlayPianoNote(2, success);
+                break;
+
+            case KeyCode.R:
+                audioManager?.PlayPianoNote(3, success);
+                break;
+        }
 
         float score = success ? beatHitScore : beatMissScore;
         onScore?.Invoke(score);
