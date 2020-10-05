@@ -190,7 +190,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 5, y: 5}
-  m_SizeDelta: {x: 100, y: 10}
+  m_SizeDelta: {x: 107.926025, y: 12.113655}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &8624960376468246956
 CanvasRenderer:
@@ -247,8 +247,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 8
+  m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1176,7 +1176,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7980906566587651809}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -1224,6 +1224,8 @@ MonoBehaviour:
   feedbackText: {fileID: 6264307558762735859}
   successColor: {r: 0.35980996, g: 0.745283, b: 0.2917853, a: 1}
   errorColor: {r: 0.74509805, g: 0.2901961, b: 0.33327782, a: 1}
+  successScore: 0.75
+  failScore: -2
   formatStrings:
   - '{{ {0} }}'
   - ({0});
