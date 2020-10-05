@@ -20,6 +20,6 @@ public class CustomButton : MonoBehaviour, IPointerEnterHandler, IPointerDownHan
 
     public void OnPointerDown(PointerEventData ped)
     {
-        audioManager?.PlayButtonHighlight();
+        audioManager?.PlayButtonClick();
     }
 }
