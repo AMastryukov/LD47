@@ -263,7 +263,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796169010441119593}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f982901a6b705b4ab20e8d08b0b01e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatHitScore: 1
+  beatHitScore: 1.25
   beatMissScore: -1
 --- !u!114 &4809420504884565000
 MonoBehaviour:

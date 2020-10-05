@@ -7,7 +7,7 @@ public class MusicMinigame : MonoBehaviour
     public static Action<float> onScore;
 
     [SerializeField] public float beatHitScore = 1f;
-    [SerializeField] public float beatMissScore = -1f;
+    [SerializeField] public float beatMissScore = -2f;
 
     private bool isActive = false;
 

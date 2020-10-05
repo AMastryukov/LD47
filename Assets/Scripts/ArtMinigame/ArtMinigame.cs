@@ -144,6 +144,7 @@ public class ArtMinigame : MonoBehaviour
         colorFillImages[1].fillAmount = (float)currentPixelFills[1] / (float)pixelRequirements[1];
         colorFillImages[2].fillAmount = (float)currentPixelFills[2] / (float)pixelRequirements[2];
     }
+
     private IEnumerator CompleteMinigameCoroutine()
     {
         yield return new WaitForEndOfFrame();
@@ -161,7 +162,7 @@ public class ArtMinigame : MonoBehaviour
         texture.ReadPixels(rect, 0, 0);
         texture.Apply();
 
-        Sprite screenshot = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+        Sprite screenshot = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 200.0f);
         onScreenshotTaken?.Invoke(screenshot);
 
         ResetMinigame();
