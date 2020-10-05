@@ -22,6 +22,7 @@ public class GameResultDisplay : MonoBehaviour
     [Header("Gameplay Values")]
     [SerializeField] private int jamEntries = 2000;
     [SerializeField] private float perfectScore = 1000f;
+    [SerializeField] private int resetTimer = 6;
 
     private CanvasGroupDisplay canvasGroupDisplay;
 
@@ -129,7 +130,7 @@ public class GameResultDisplay : MonoBehaviour
     {
         nextJamButton.interactable = false;
 
-        for (int i = 9; i >= 0; i--)
+        for (int i = resetTimer; i >= 0; i--)
         {
             yield return new WaitForSeconds(1f);
 

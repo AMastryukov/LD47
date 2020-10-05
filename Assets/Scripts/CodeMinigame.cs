@@ -8,6 +8,9 @@ public class CodeMinigame : MonoBehaviour
 
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private TextMeshProUGUI requiredCodeText;
+    [SerializeField] private TextMeshProUGUI feedbackText;
+    [SerializeField] private Color successColor;
+    [SerializeField] private Color errorColor;
 
     [Header("Code String Data")]
     [SerializeField] private string[] formatStrings;
@@ -18,6 +21,16 @@ public class CodeMinigame : MonoBehaviour
     private int previousInputLength = -1;
 
     private bool isActive = false;
+
+    private void Awake()
+    {
+        GameManager.onGameFinished += GenerateNewCode;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.onGameFinished -= GenerateNewCode;
+    }
 
     private void Start()
     {
@@ -47,6 +60,9 @@ public class CodeMinigame : MonoBehaviour
         previousInputLength = -1;
         requiredCodeText.text = randomCode;
         inputField.text = "";
+
+        feedbackText.color = successColor;
+        feedbackText.text = "No issues found";
     }
 
     public void VerifyInput()
@@ -64,6 +80,9 @@ public class CodeMinigame : MonoBehaviour
             {
                 onScore?.Invoke(1f);
 
+                feedbackText.color = successColor;
+                feedbackText.text = "No issues found";
+
                 scoreArray[currentTypedChar] = 0;
 
                 // We've reached the end, generate new code string
@@ -72,7 +91,10 @@ public class CodeMinigame : MonoBehaviour
         }
         else
         {
-            onScore?.Invoke(-1);
+            onScore?.Invoke(-2f);
+
+            feedbackText.color = errorColor;
+            feedbackText.text = "Error at character " + currentTypedChar;
 
             inputField.text = inputField.text.Substring(0, inputField.text.Length - 1);
             VerifyInput();

@@ -919,6 +919,7 @@ MonoBehaviour:
   inspirationChance: 0.35
   inspirationTimerIncrease: 5
   inspirationTimerMax: 10
+  skillIncreasePerCent: 0.005
 --- !u!82 &845015519
 AudioSource:
   m_ObjectHideFlags: 0

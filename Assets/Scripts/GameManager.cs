@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
 
     public static int currentLF = 46;
 
+    public static float audioSkill = 0.0f;
+    public static float funSkill = 0.0f;
+    public static float graphicsSkill = 0.0f;
+
     [Header("References")]
     [SerializeField] private MinigameManager minigameManager;
     [SerializeField] private CanvasGroupDisplay startGameCGD;
@@ -34,6 +38,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float inspirationChance = 0.25f;
     [SerializeField] private float inspirationTimerIncrease = 3f;
     [SerializeField] private float inspirationTimerMax = 5f;
+    [SerializeField] private float skillIncreasePerCent = 0.0025f;
 
     private float _motivation;
     private float _timer;
@@ -133,8 +138,10 @@ public class GameManager : MonoBehaviour
     public void AddFun(float fun)
     {
         if (CurrentGame != null) 
-        { 
-            if (FunInspirationTimer > 0f && fun > 0f) { fun *= 2f; }
+        {
+            fun += funSkill;
+
+            if (FunInspirationTimer > 0f) { fun *= 1.5f; }
 
             CurrentGame.Fun += fun;
             Motivation += motivationGainRate * Mathf.Sign(fun);
@@ -145,7 +152,9 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentGame != null) 
         {
-            if (GraphicsInspirationTimer > 0f && graphics > 0f) { graphics *= 2f; }
+            graphics += graphicsSkill;
+
+            if (GraphicsInspirationTimer > 0f) { graphics *= 1.5f; }
 
             CurrentGame.Graphics += graphics;
             Motivation += motivationGainRate * Mathf.Sign(graphics);
@@ -156,7 +165,9 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentGame != null) 
         {
-            if (AudioInspirationTimer > 0f && audio > 0f) { audio *= 2f; }
+            audio += audioSkill;
+
+            if (AudioInspirationTimer > 0f) { audio *= 1.5f; }
 
             CurrentGame.Audio += audio;
             Motivation += motivationGainRate * Mathf.Sign(audio);
@@ -228,19 +239,26 @@ public class GameManager : MonoBehaviour
         StopCoroutine(motivationCoroutine);
         StopCoroutine(inspirationCoroutine);
 
+        minigameButtonsCG.blocksRaycasts = false;
+
         startGameCGD.CloseDisplay();
         minigameCGD.CloseDisplay();
         informationBarCGD.CloseDisplay();
-
         gameResultCGD.OpenDisplay();
 
+        minigameManager.CloseAllMinigames();
         gameResultDisplay.ShowGameResult(completed);
 
-        minigameButtonsCG.blocksRaycasts = false;
-
-        minigameManager.CloseAllMinigames();
+        UpdateSkills();
 
         onGameFinished?.Invoke();
+    }
+
+    private void UpdateSkills()
+    {
+        funSkill += Mathf.Min(0.5f, CurrentGame.Fun * skillIncreasePerCent);
+        audioSkill += Mathf.Min(0.5f, CurrentGame.Audio * skillIncreasePerCent);
+        graphicsSkill += Mathf.Min(0.5f, CurrentGame.Graphics * skillIncreasePerCent);
     }
 }
 
