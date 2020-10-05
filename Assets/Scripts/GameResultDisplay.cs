@@ -135,13 +135,13 @@ public class GameResultDisplay : MonoBehaviour
 
         for (int i = resetTimer; i >= 0; i--)
         {
-            yield return new WaitForSeconds(1f);
-
             string startTime = "in " + i.ToString() + " seconds";
 
-            if (i == 0) { startTime = "NOW"; }
+            if (i == 0) { startTime = "RIGHT NOW"; }
 
-            nextJamCountdownText.text = string.Format("Next LFJam starts {0}!", startTime);
+            nextJamCountdownText.text = string.Format("Next Compo starts {0}!", startTime);
+
+            yield return new WaitForSeconds(1f);
         }
 
         nextJamButton.interactable = true;

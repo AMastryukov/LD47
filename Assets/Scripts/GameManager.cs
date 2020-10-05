@@ -33,8 +33,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float defaultTimer = 48f;
     [SerializeField] private float defaultMotivation = 25f;
     [SerializeField] private float maximumMotivation = 100f;
-    [SerializeField] private float motivationLossRate = 2f;
-    [SerializeField] private float motivationGainRate = 10f;
+    [SerializeField] private float motivationLossRate = 0.5f;
     [SerializeField] private float inspirationChance = 0.25f;
     [SerializeField] private float inspirationTimerIncrease = 3f;
     [SerializeField] private float inspirationTimerMax = 5f;
@@ -148,7 +147,7 @@ public class GameManager : MonoBehaviour
             if (FunInspirationTimer > 0f) { fun *= 1.5f; }
 
             CurrentGame.Fun += fun;
-            Motivation += motivationGainRate * Mathf.Sign(fun);
+            Motivation += fun;
         }
     }
 
@@ -161,7 +160,7 @@ public class GameManager : MonoBehaviour
             if (GraphicsInspirationTimer > 0f) { graphics *= 1.5f; }
 
             CurrentGame.Graphics += graphics;
-            Motivation += motivationGainRate * Mathf.Sign(graphics);
+            Motivation += graphics;
         }
     }
 
@@ -174,7 +173,7 @@ public class GameManager : MonoBehaviour
             if (AudioInspirationTimer > 0f) { audio *= 1.5f; }
 
             CurrentGame.Audio += audio;
-            Motivation += motivationGainRate * Mathf.Sign(audio);
+            Motivation += audio;
         }
     }
 

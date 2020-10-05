@@ -16,8 +16,7 @@ public class ArtMinigame : MonoBehaviour
     [SerializeField] private Image[] colorFillImages;
 
     [Header("Gameplay Values")]
-    [SerializeField] private float successScore = 0.5f;
-    [SerializeField] private float failScore = -1f;
+    [SerializeField] private float scorePerPixel = 0.25f;
 
     private Color selectedColor = Color.white;
 
@@ -94,7 +93,6 @@ public class ArtMinigame : MonoBehaviour
         // This means that the pixel is already painted the color we need, so we ignore it
         if (color == colorRequirement[0] || color == colorRequirement[1] || color == colorRequirement[2])
         {
-            onScore?.Invoke(failScore);
             return;
         }
 
@@ -103,12 +101,17 @@ public class ArtMinigame : MonoBehaviour
         {
             if (selectedColor == colorRequirement[i] && currentPixelFills[i] >= pixelRequirements[i])
             {
-                onScore?.Invoke(failScore);
                 return;
             }
         }
 
-        onScore?.Invoke(successScore);
+        // Ignore white-colored paint
+        if (selectedColor == Color.white)
+        {
+            return;
+        }
+
+        onScore?.Invoke(scorePerPixel);
         artPixel.PaintPixel(selectedColor);
 
         // Fill in the requirements
