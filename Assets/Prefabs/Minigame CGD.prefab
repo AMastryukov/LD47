@@ -923,7 +923,7 @@ PrefabInstance:
       objectReference: {fileID: 6120456232441808636}
     - target: {fileID: 926678624, guid: 588b0f5397a066d418d76c2b381402fc, type: 3}
       propertyPath: failScore
-      value: -0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 926678624, guid: 588b0f5397a066d418d76c2b381402fc, type: 3}
       propertyPath: successScore
