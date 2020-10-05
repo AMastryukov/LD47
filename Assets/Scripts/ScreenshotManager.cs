@@ -13,12 +13,14 @@ public class ScreenshotManager : MonoBehaviour
 
     private Sprite screenshot;
 
-    public void TakeScreenshot()
+    public Sprite TakeScreenshot()
     {
         width = System.Convert.ToInt32(captureArea.rect.width);
         height = System.Convert.ToInt32(captureArea.rect.height);
 
         StartCoroutine(ScreenshotCoroutine());
+
+        return screenshot;
     }
 
     private IEnumerator ScreenshotCoroutine()

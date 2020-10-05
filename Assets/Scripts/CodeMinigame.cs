@@ -12,6 +12,10 @@ public class CodeMinigame : MonoBehaviour
     [SerializeField] private Color successColor;
     [SerializeField] private Color errorColor;
 
+    [Header("Gameplay Values")]
+    [SerializeField] private float successScore = 0.75f;
+    [SerializeField] private float failScore = -2f;
+
     [Header("Code String Data")]
     [SerializeField] private string[] formatStrings;
     [SerializeField] private string[] contentStrings;
@@ -78,7 +82,7 @@ public class CodeMinigame : MonoBehaviour
         {
             if (scoreArray[currentTypedChar] == 1)
             {
-                onScore?.Invoke(1f);
+                onScore?.Invoke(successScore);
 
                 feedbackText.color = successColor;
                 feedbackText.text = "No issues found";
@@ -91,7 +95,7 @@ public class CodeMinigame : MonoBehaviour
         }
         else
         {
-            onScore?.Invoke(-2f);
+            onScore?.Invoke(failScore);
 
             feedbackText.color = errorColor;
             feedbackText.text = "Error at character " + currentTypedChar;
