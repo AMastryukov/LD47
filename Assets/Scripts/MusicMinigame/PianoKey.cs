@@ -8,6 +8,11 @@ public class PianoKey : MonoBehaviour
 {
     public static Action<bool> onKeyPressed;
 
+    //Reference to ingamesoundhandler
+    [SerializeField] private GameObject SoundHandler;
+
+
+
     [SerializeField] private Image noteAreaImage;
     [SerializeField] private Color correctNoteColor;
     [SerializeField] private Color wrongNoteColor;
@@ -43,6 +48,7 @@ public class PianoKey : MonoBehaviour
     {
         if (Input.GetKeyDown(keyCode))
         {
+            SoundHandler.GetComponent<InGameSounds>().Play_note(keyCode);
             onKeyPressed?.Invoke(beatIsOverlapping);
 
             StartCoroutine(FlashImageColor(beatIsOverlapping));
