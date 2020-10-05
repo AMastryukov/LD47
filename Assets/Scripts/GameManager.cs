@@ -81,12 +81,16 @@ public class GameManager : MonoBehaviour
     {
         CodeMinigame.onScore += AddFun;
         MusicMinigame.onScore += AddAudio;
+        ArtMinigame.onScore += AddGraphics;
+        ArtMinigame.onScreenshotTaken += AddGameScreenshot;
     }
 
     private void OnDestroy()
     {
         CodeMinigame.onScore -= AddFun;
         MusicMinigame.onScore -= AddAudio;
+        ArtMinigame.onScore -= AddGraphics; 
+        ArtMinigame.onScreenshotTaken -= AddGameScreenshot;
     }
 
     private void Start()
@@ -259,6 +263,11 @@ public class GameManager : MonoBehaviour
         funSkill += Mathf.Min(0.5f, CurrentGame.Fun * skillIncreasePerCent);
         audioSkill += Mathf.Min(0.5f, CurrentGame.Audio * skillIncreasePerCent);
         graphicsSkill += Mathf.Min(0.5f, CurrentGame.Graphics * skillIncreasePerCent);
+    }
+
+    private void AddGameScreenshot(Sprite screenshot)
+    {
+        CurrentGame.Screenshots.Add(screenshot);
     }
 }
 
