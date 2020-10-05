@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class art_sound : MonoBehaviour, IPointerDownHandler
+public class art_sound : MonoBehaviour, IPointerEnterHandler
 {
     //reference to ingamesounds
     [SerializeField]
-    private GameObject main;
+    private InGameSounds main;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,15 +22,15 @@ public class art_sound : MonoBehaviour, IPointerDownHandler
             if (Input.GetMouseButtonDown(0))
             {
                 Debug.Log("yes");
-                main.GetComponent<InGameSounds>().art_game();
+                main.art_game();
             }
         }
         
     }
     
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
     {
         
-        
+
     }
 }

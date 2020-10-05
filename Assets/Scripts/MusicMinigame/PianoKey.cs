@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class PianoKey : MonoBehaviour
 {
     public static Action<bool> onKeyPressed;
+    
 
     //Reference to ingamesoundhandler
-    [SerializeField] private GameObject SoundHandler;
+     private InGameSounds soundHandler;
 
 
 
@@ -25,6 +26,7 @@ public class PianoKey : MonoBehaviour
 
     private void Awake()
     {
+        soundHandler = FindObjectOfType<InGameSounds>();
         defaultNoteAreaColor = noteAreaImage.color;
     }
 
@@ -48,7 +50,7 @@ public class PianoKey : MonoBehaviour
     {
         if (Input.GetKeyDown(keyCode))
         {
-            SoundHandler.GetComponent<InGameSounds>().Play_note(keyCode);
+            soundHandler.Play_note(keyCode);
             onKeyPressed?.Invoke(beatIsOverlapping);
 
             StartCoroutine(FlashImageColor(beatIsOverlapping));
