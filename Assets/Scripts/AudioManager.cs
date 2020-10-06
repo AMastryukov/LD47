@@ -45,12 +45,14 @@ public class AudioManager : MonoBehaviour
     {
         // Select a random soundtrack and play it
         musicSource.clip = gameplayTracks[UnityEngine.Random.Range(0, gameplayTracks.Length)];
+        musicSource.loop = false;
         musicSource.Play();
     }
 
     public void PlayPreGameTrack()
     {
         musicSource.clip = pregameTrack;
+        musicSource.loop = true;
         musicSource.Play();
     }
 
@@ -71,13 +73,13 @@ public class AudioManager : MonoBehaviour
 
     public void PlayPianoNote(int key, bool hit)
     {
-        if (hit) { soundEffectSource.PlayOneShot(pianoNotesHit[key], 0.5f); }
+        if (hit) { soundEffectSource.PlayOneShot(pianoNotesHit[key], 0.25f); }
         else { soundEffectSource.PlayOneShot(pianoNotesMiss[key]); }
     }
 
     public void PlayMusicGameSound()
     {
-        soundEffectSource.PlayOneShot(pianoNotesHit[Random.Range(0, pianoNotesHit.Length)], 0.5f);
+        soundEffectSource.PlayOneShot(pianoNotesHit[Random.Range(0, pianoNotesHit.Length)], 0.25f);
     }
 
     public void PlayCodingGameSound()

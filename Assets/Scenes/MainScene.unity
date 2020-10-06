@@ -917,7 +917,7 @@ MonoBehaviour:
   inspirationChance: 0.35
   inspirationTimerIncrease: 5
   inspirationTimerMax: 10
-  skillIncreasePerCent: 0.025
+  skillIncreasePerCent: 0.005
 --- !u!1 &869867237
 GameObject:
   m_ObjectHideFlags: 0

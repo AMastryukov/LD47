@@ -11,11 +11,13 @@ public class StartGameDisplay : MonoBehaviour
     [SerializeField] private TextMeshProUGUI themeText;
     [SerializeField] private string[] themes;
 
+    private AudioManager audioManager;
+
     private void Awake()
     {
-        UpdateButton();
-
         GameManager.onLudumFactorumUpdated += UpdateTheme;
+
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void OnDestroy()
@@ -23,9 +25,15 @@ public class StartGameDisplay : MonoBehaviour
         GameManager.onLudumFactorumUpdated -= UpdateTheme;
     }
 
+    private void Start()
+    {
+        UpdateButton();
+    }
+
     public void UpdateButton()
     {
         startButton.interactable = inputTextBox.text.Length >= 3;
+        audioManager?.PlayRandomClick();
     }
 
     public void PressStartButton()

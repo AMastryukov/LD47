@@ -7,10 +7,13 @@ public class BeatSpawner : MonoBehaviour
     [SerializeField] private Transform[] beatSpawners;
     [SerializeField] private Transform beatParent;
     [SerializeField] private GameObject beatPrefab;
-    [SerializeField] private float beatsPerMinute = 140f;
+    [SerializeField] private float ludumBPM = 150f;
+    [SerializeField] private float factorumBPM = 140f;
 
     private Coroutine spawnCoroutine;
     private AudioManager audioManager;
+
+    private float bpm = 140f;
 
     private void Awake()
     {
@@ -19,8 +22,8 @@ public class BeatSpawner : MonoBehaviour
 
     public void StartSpawning()
     {
-        if (audioManager.CurrentSong.name == "ludum") { beatsPerMinute = 150f; }
-        else { beatsPerMinute = 140f; }
+        if (audioManager.CurrentSong.name == "ludum") { bpm = ludumBPM; }
+        else { bpm = factorumBPM; }
 
         spawnCoroutine = StartCoroutine(CreateNewBeat());
     }
@@ -36,10 +39,10 @@ public class BeatSpawner : MonoBehaviour
     {
         while(true)
         {
-            yield return new WaitForSeconds(60f / beatsPerMinute);
-
             GameObject spawnedBeat = Instantiate(beatPrefab, beatParent);
             spawnedBeat.transform.position = beatSpawners[Random.Range(0, beatSpawners.Length)].position;
+
+            yield return new WaitForSeconds(60f / bpm);
         }
     }
 }
