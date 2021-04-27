@@ -9,16 +9,28 @@ public class MusicMinigame : MonoBehaviour
     [SerializeField] public float beatHitScore = 1f;
     [SerializeField] public float beatMissScore = -2f;
 
+    private AudioManager audioManager;
+    private BeatSpawner beatSpawner;
+
     private bool isActive = false;
 
     private void Awake()
     {
-        PianoKey.onKeyPressed += CalculateScore;
+        GameManager.onGameStarted += StartMinigame;
+        GameManager.onGameFinished += EndMinigame;
+
+        PianoKey.onKeyPressed += HandleKeyPress;
+
+        audioManager = FindObjectOfType<AudioManager>();
+        beatSpawner = GetComponent<BeatSpawner>();
     }
 
-    void Start()
+    private void OnDestroy()
     {
-        StartMinigame();
+        GameManager.onGameStarted -= StartMinigame;
+        GameManager.onGameFinished -= EndMinigame;
+
+        PianoKey.onKeyPressed -= HandleKeyPress;
     }
 
     public void ActivateGame(bool active)
@@ -28,12 +40,36 @@ public class MusicMinigame : MonoBehaviour
 
     public void StartMinigame()
     {
-        GetComponent<BeatSpawner>().StartSpawning();
+        beatSpawner.StartSpawning();
     }
 
-    private void CalculateScore(bool success)
+    public void EndMinigame()
+    {
+        beatSpawner.StopSpawning();
+    }
+
+    private void HandleKeyPress(bool success, KeyCode keyCode)
     {
         if (!isActive) { return; }
+
+        switch(keyCode)
+        {
+            case KeyCode.Q:
+                audioManager?.PlayPianoNote(0, success);
+                break;
+
+            case KeyCode.W:
+                audioManager?.PlayPianoNote(1, success);
+                break;
+
+            case KeyCode.E:
+                audioManager?.PlayPianoNote(2, success);
+                break;
+
+            case KeyCode.R:
+                audioManager?.PlayPianoNote(3, success);
+                break;
+        }
 
         float score = success ? beatHitScore : beatMissScore;
         onScore?.Invoke(score);

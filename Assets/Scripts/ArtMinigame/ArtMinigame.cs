@@ -144,7 +144,6 @@ public class ArtMinigame : MonoBehaviour
         colorFillImages[1].fillAmount = (float)currentPixelFills[1] / (float)pixelRequirements[1];
         colorFillImages[2].fillAmount = (float)currentPixelFills[2] / (float)pixelRequirements[2];
     }
-
     private IEnumerator CompleteMinigameCoroutine()
     {
         yield return new WaitForEndOfFrame();

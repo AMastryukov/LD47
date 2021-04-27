@@ -259,9 +259,9 @@ public class GameManager : MonoBehaviour
 
     private void UpdateSkills()
     {
-        funSkill += Mathf.Min(1f, CurrentGame.Fun * skillIncreasePerCent);
-        audioSkill += Mathf.Min(1f, CurrentGame.Audio * skillIncreasePerCent);
-        graphicsSkill += Mathf.Min(1f, CurrentGame.Graphics * skillIncreasePerCent);
+        funSkill += CurrentGame.Fun * skillIncreasePerCent;
+        audioSkill += CurrentGame.Audio * skillIncreasePerCent;
+        graphicsSkill += CurrentGame.Graphics * skillIncreasePerCent;
     }
 
     private void AddGameScreenshot(Sprite screenshot)

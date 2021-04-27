@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 5586459847413477302}
   - component: {fileID: 5586459847413477303}
   - component: {fileID: 5586459847413477304}
+  - component: {fileID: 46267141587562036}
   m_Layer: 5
   m_Name: Start Jam Button
   m_TagString: Untagged
@@ -266,6 +267,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &46267141587562036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5586459847413477306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7871656d5a42d0f46a7b1126991a871a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5586459847416067494
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,7 +461,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5586459847491447582}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
